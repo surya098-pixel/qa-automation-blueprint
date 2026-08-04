@@ -92,9 +92,22 @@ Every push and PR runs the full matrix — **3 browsers × 2 shards = 6 parallel
 4. Add specs under `tests/`.
 5. If you need auto-login for most tests, use the fixture in `src/fixtures/auth.fixture.ts`.
 
-## License
+## Part of the QA Blueprint series
 
-MIT © [Surya Reddy](https://github.com/surya098-pixel)
+Three companion templates that cover the QA automation stack end-to-end:
+
+| | Repo | Stack | For |
+|---|---|---|---|
+| 🎭 | **qa-automation-blueprint** *(you are here)* | Playwright + TypeScript | UI end-to-end tests |
+| 🥒 | [api-automation-blueprint](https://github.com/surya098-pixel/api-automation-blueprint) | RestAssured + Cucumber + Java | API contract & regression |
+| 🚀 | [load-testing-blueprint](https://github.com/surya098-pixel/load-testing-blueprint) | Gatling + Java | Load, stress & spike |
+
+## License & attribution
+
+This project (the template itself) is released under the **MIT License** — see [LICENSE](LICENSE).
+Third-party dependencies (Playwright, TypeScript, ESLint, Allure, etc.) are declared in `package.json` and resolved from npm at install time — none of their code is redistributed here. Full attribution and trademark disclaimers are in [NOTICE](NOTICE).
+
+© 2026 [Surya Reddy](https://github.com/surya098-pixel)
 
 ---
 
