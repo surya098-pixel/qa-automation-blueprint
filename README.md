@@ -111,4 +111,8 @@ Third-party dependencies (Playwright, TypeScript, ESLint, Allure, etc.) are decl
 
 ---
 
+<sub>💡 If this template saved you time, [give it a star](../../stargazers) — it helps others find it. Track growth on [star-history](https://star-history.com/#surya098-pixel/qa-automation-blueprint&Date).</sub>
+
+---
+
 *Have a suggestion? Open an issue or PR — this template evolves with real-world QA needs.*
