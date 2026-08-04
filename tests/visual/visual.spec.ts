@@ -20,8 +20,8 @@ test.describe('Visual regression', () => {
   test('example.com landing page — full page snapshot', async ({ page }) => {
     await page.goto('https://example.com');
 
-    // Wait for network idle so any lazy assets settle before capture.
-    await page.waitForLoadState('networkidle');
+    // Wait for the primary heading to settle before capture.
+    await page.getByRole('heading', { level: 1 }).waitFor();
 
     await expect(page).toHaveScreenshot('example-landing.png', {
       fullPage: true,
