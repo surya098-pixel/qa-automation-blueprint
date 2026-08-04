@@ -7,6 +7,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     name: Playwright (${{ matrix.project }} / shard ${{ matrix.shard }})
@@ -56,3 +61,32 @@ jobs:
           name: allure-results-${{ matrix.project }}-${{ matrix.shard }}
           path: allure-results/
           retention-days: 14
+
+  deploy-report:
+    name: Deploy sample report to GitHub Pages
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download chromium/shard-1 report
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-report-chromium-1
+          path: pages-content
+
+      - name: Add landing note
+        run: |
+          cat > pages-content/_note.html <<'EOF'
+          <!-- This is a sample report from one matrix cell (chromium, shard 1).
+               The full CI run generates 6 reports across 3 browsers and 2 shards. -->
+          EOF
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages-content
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

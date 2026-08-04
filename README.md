@@ -5,9 +5,12 @@
 
 [![E2E Tests](https://github.com/surya098-pixel/qa-automation-blueprint/actions/workflows/e2e.yml/badge.svg)](https://github.com/surya098-pixel/qa-automation-blueprint/actions/workflows/e2e.yml)
 [![Lint](https://github.com/surya098-pixel/qa-automation-blueprint/actions/workflows/lint.yml/badge.svg)](https://github.com/surya098-pixel/qa-automation-blueprint/actions/workflows/lint.yml)
+[![Live Report](https://img.shields.io/badge/live-Playwright%20report-2EAD33?logo=github)](https://surya098-pixel.github.io/qa-automation-blueprint/)
 [![Playwright](https://img.shields.io/badge/tested_with-Playwright-2EAD33?logo=playwright)](https://playwright.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+👉 **[View a live sample report](https://surya098-pixel.github.io/qa-automation-blueprint/)** — auto-published from CI on every push to `main`.
 
 ---
 

@@ -5,12 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-05
+
 ### Added
 - **Accessibility testing** — `tests/a11y/accessibility.spec.ts` using `@axe-core/playwright` with WCAG 2.1 A/AA rules
 - **Visual regression** — `tests/visual/visual.spec.ts` using Playwright's built-in `toHaveScreenshot`
 - Dedicated `visual` project in `playwright.config.ts` with `snapshotPathTemplate` for per-platform baselines
 - `npm run test:a11y`, `npm run test:visual`, `npm run test:visual:update` scripts
 - Docker-based baseline generation flow documented in README
+- **Live sample report** auto-deployed to GitHub Pages on every push to `main`
+
+### Changed
+- Pinned `typescript` to `~5.6.x` to prevent transitive resolution to a version incompatible with `typescript-eslint@8`
+- A11y + visual sample targets moved to `example.com` (clean baseline) — retargetable to any app
+
+[0.2.0]: https://github.com/surya098-pixel/qa-automation-blueprint/releases/tag/v0.2.0
 
 ## [0.1.0] - 2026-08-05
 
