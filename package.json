@@ -11,6 +11,9 @@
     "test:chromium": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=firefox",
     "test:webkit": "playwright test --project=webkit",
+    "test:a11y": "playwright test tests/a11y",
+    "test:visual": "playwright test tests/visual --project=visual",
+    "test:visual:update": "playwright test tests/visual --project=visual --update-snapshots",
     "test:debug": "PWDEBUG=1 playwright test",
     "report": "playwright show-report",
     "allure:generate": "allure generate ./allure-results -o ./allure-report --clean",
@@ -34,6 +37,7 @@
   "author": "Surya Reddy",
   "license": "MIT",
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
     "@playwright/test": "^1.48.0",
     "@types/node": "^22.0.0",
     "allure-playwright": "^3.0.0",

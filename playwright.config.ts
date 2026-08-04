@@ -10,7 +10,15 @@ export default defineConfig({
   retries: isCI ? 2 : 0,
   workers: isCI ? 4 : undefined,
   timeout: 30_000,
-  expect: { timeout: 5_000 },
+  expect: {
+    timeout: 5_000,
+    // Snapshot config — segregates baselines per platform to avoid font/rendering drift.
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.02,
+      threshold: 0.2,
+    },
+  },
+  snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}-{projectName}-{platform}{ext}',
 
   reporter: [
     ['list'],
@@ -29,10 +37,32 @@ export default defineConfig({
   },
 
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-    { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
-    { name: 'mobile-safari', use: { ...devices['iPhone 14'] } },
+    // Default browser matrix — visual tests are excluded via testIgnore.
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      testIgnore: ['**/visual/**'],
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      testIgnore: ['**/visual/**'],
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      testIgnore: ['**/visual/**'],
+    },
+    { name: 'mobile-chrome', use: { ...devices['Pixel 7'] }, testIgnore: ['**/visual/**'] },
+    { name: 'mobile-safari', use: { ...devices['iPhone 14'] }, testIgnore: ['**/visual/**'] },
+
+    // Dedicated visual regression project — opt-in via `npm run test:visual`.
+    // Not run in the default CI matrix; needs baseline snapshots generated in
+    // a consistent environment (Docker recommended).
+    {
+      name: 'visual',
+      use: { ...devices['Desktop Chrome'] },
+      testMatch: ['**/visual/**'],
+    },
   ],
 });

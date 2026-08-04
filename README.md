@@ -27,6 +27,8 @@ Most Playwright starters give you `npx playwright init` and stop. This one is wh
 | HTML report + **Allure** report | ✅ |
 | API testing example (no browser) | ✅ |
 | Network mocking (`page.route`) example | ✅ |
+| **Accessibility testing** via `@axe-core/playwright` (WCAG 2.1 A/AA) | ✅ |
+| **Visual regression** via built-in `toHaveScreenshot` — platform-segregated snapshots | ✅ |
 | GitHub Actions matrix workflow | ✅ |
 | ESLint + Prettier + `tsc --noEmit` gate | ✅ |
 | `.env` support via `dotenv` | ✅ |
@@ -41,12 +43,48 @@ npm ci
 npx playwright install --with-deps
 cp .env.example .env
 
-npm test                    # run everything
+npm test                    # everything except visual regression
 npm run test:chromium       # single browser
+npm run test:a11y           # accessibility only (axe-core)
+npm run test:visual         # visual regression (needs baselines — see below)
+npm run test:visual:update  # regenerate baselines
 npm run test:ui             # interactive UI mode
 npm run test:debug          # step through with Playwright Inspector
 npm run report              # open the HTML report
 ```
+
+## Accessibility testing
+
+`tests/a11y/` runs the WCAG 2.1 A/AA rulesets via `@axe-core/playwright`. Serious and critical violations fail the build; moderate and minor ones surface in the report for triage.
+
+```ts
+const results = await new AxeBuilder({ page })
+  .withTags(['wcag2a', 'wcag2aa'])
+  .disableRules(['color-contrast'])  // scoped exclusions for known issues
+  .analyze();
+```
+
+## Visual regression
+
+`tests/visual/` uses Playwright's built-in `expect(page).toHaveScreenshot()`. Baselines are segregated per browser + OS via `snapshotPathTemplate`, so macOS/Linux font rendering doesn't cause false positives.
+
+**Workflow:**
+
+1. Generate baselines locally the first time:
+   ```bash
+   npm run test:visual:update
+   ```
+2. Commit the resulting files under `tests/visual/__screenshots__/`.
+3. Subsequent runs compare against the baseline; diffs are reported with an image side-by-side.
+
+**For CI-stable baselines**, generate them inside the official Playwright Docker image so pixels match Ubuntu runners exactly:
+
+```bash
+docker run --rm -v $(pwd):/work -w /work mcr.microsoft.com/playwright:v1.48.0-jammy \
+  npm run test:visual:update
+```
+
+Visual tests are opt-in — they run under a dedicated `visual` project and are excluded from the default CI matrix.
 
 ## Project structure
 

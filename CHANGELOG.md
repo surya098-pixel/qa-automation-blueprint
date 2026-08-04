@@ -5,6 +5,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 
 ## [Unreleased]
 
+### Added
+- **Accessibility testing** — `tests/a11y/accessibility.spec.ts` using `@axe-core/playwright` with WCAG 2.1 A/AA rules
+- **Visual regression** — `tests/visual/visual.spec.ts` using Playwright's built-in `toHaveScreenshot`
+- Dedicated `visual` project in `playwright.config.ts` with `snapshotPathTemplate` for per-platform baselines
+- `npm run test:a11y`, `npm run test:visual`, `npm run test:visual:update` scripts
+- Docker-based baseline generation flow documented in README
+
 ## [0.1.0] - 2026-08-05
 
 ### Added
